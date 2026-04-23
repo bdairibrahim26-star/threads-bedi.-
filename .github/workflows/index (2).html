@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مولّد الثريدز</title>
+
+<style>
+body{
+    font-family:system-ui;
+    transition:0.3s;
+}
+
+/* الثيمات */
+.light{
+    background:#f5f5f5;
+    color:#000;
+}
+
+.dark{
+    background:#1e1e1e;
+    color:#fff;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+    text-align:center;
+}
+
+button{
+    padding:12px;
+    margin:5px;
+    width:100%;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+#mainBtn{background:#667eea;color:#fff}
+#threadsBtn{background:#000;color:#fff}
+#themeBtn{background:#888;color:#fff}
+
+.result{
+    margin-top:20px;
+    display:none;
+}
+.show{display:block}
+</style>
+</head>
+
+<body class="light">
+
+<div class="container">
+
+<h1>مولّد الثريدز</h1>
+
+<p id="attempts"></p>
+
+<button id="mainBtn">جرّب حظك 🔥</button>
+
+<div class="result" id="result">
+<p id="text"></p>
+</div>
+
+<button id="threadsBtn" style="display:none;">انشر على Threads 🚀</button>
+<button id="themeBtn">تغيير الثيم 🌙</button>
+
+</div>
+
+<script>
+
+const texts = [
+"اكتب ثريد مضحك 😂",
+"نزل صورة بدون شرح 🤫",
+"احكي قصة غريبة 🤯"
+];
+
+let used = localStorage.getItem('used');
+
+function update(){
+    if(used){
+        attempts.textContent = "استعملت محاولتك 😴";
+        mainBtn.disabled = true;
+    } else {
+        attempts.textContent = "عندك محاولة وحدة بس 🔥";
+    }
+}
+
+mainBtn.onclick = ()=>{
+    if(used) return;
+
+    const text = texts[Math.floor(Math.random()*texts.length)];
+
+    document.getElementById('text').textContent = text;
+    result.classList.add('show');
+    threadsBtn.style.display = "block";
+
+    localStorage.setItem('used', true);
+    used = true;
+
+    update();
+}
+
+threadsBtn.onclick = ()=>{
+    const content = document.getElementById('text').textContent;
+    navigator.clipboard.writeText(content);
+    window.open("https://www.threads.net/", "_blank");
+}
+
+let dark = false;
+themeBtn.onclick = ()=>{
+    dark = !dark;
+    document.body.className = dark ? "dark" : "light";
+}
+
+update();
+
+</script>
+
+</body>
+</html>
